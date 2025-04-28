@@ -1,17 +1,20 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-require("dotenv").config();
+import {
+  GoogleGenAI,
+  createUserContent,
+  createPartFromUri,
+} from "@google/genai";
+import dotenv from "dotenv";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+dotenv.config();
 
-async function run() {
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-  const prompt = " write a story abount reactjs for beginners";
-  const result = await model.generateContent(prompt);
+const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-  const response = await result.response;
-  const text = response.text();
-
-  console.log(text);
+async function textTotext() {
+  const response = await genAI.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: "can you review sona comstar",
+  });
+  console.log(response.text);
 }
 
-run();
+await textTotext();
